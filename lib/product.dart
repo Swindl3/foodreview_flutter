@@ -63,7 +63,7 @@ class _ProductSaveScreen extends State {
     param['description'] = _detail.text;
     param['price'] = _price.text;
     param['userId'] = '${this._userId}';
-    http.post('${Config.api_url}/product/save',body: param).then((response){
+    http.post('${Config.api_url}/foodstuff/save',body: param).then((response){
       print(response.body);
     }
     );

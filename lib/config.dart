@@ -1,3 +1,3 @@
 class Config {
-  static String api_url = 'http://172.26.24.214:8080';
+  static String api_url = 'http://192.168.100.113:8080';
 }

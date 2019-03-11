@@ -22,18 +22,22 @@ class _ECPApp extends State {
   TextEditingController _userName = TextEditingController();
   TextEditingController _passWord = TextEditingController();
   void onLogin() {
+    print("OnlOgin");
     Map<String, dynamic> param = Map();
-    param['userName'] = _userName.text;
-    param['passWord'] = _passWord.text;
+    param['username'] = _userName.text;
+    param['password'] = _passWord.text;
     http
         .post('${Config.api_url}/userprofile/login', body: param)
         .then((response) {
       Map resMap = jsonDecode(response.body) as Map;
+        print(response.body);
       if (resMap['status'] == 0) {
         int userId = resMap['data'];
         print('user id ${userId}');
         Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) => LandingScreen(userId)));
+      }else{
+        print(resMap['data']);
       }
     });
   }
@@ -43,6 +47,7 @@ class _ECPApp extends State {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Text('ECP'),
       ),
       body: ListView(
@@ -53,14 +58,30 @@ class _ECPApp extends State {
           TextField(
             controller: _passWord,
           ),
-          FlatButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext) => RegisterScreen()));
-            },
-            child: Text('ลงทะเบียน'),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              new RaisedButton(
+                onPressed: onLogin,
+                padding: const EdgeInsets.all(8.0),
+                textColor: Colors.white,
+                color: Colors.green,
+                child: new Text("Login"),
+              ),
+              new RaisedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext) => RegisterScreen()));
+                },
+                textColor: Colors.white,
+                color: Colors.blue,
+                padding: const EdgeInsets.all(8.0),
+                child: new Text(
+                  "Register",
+                ),
+              )
+            ],
           ),
-          RaisedButton(child: Text('ตกลง'), onPressed: onLogin)
         ],
       ),
     );
@@ -91,13 +112,14 @@ class _RegisterScreen extends State {
     } else {
       _isError = false;
       Map<String, String> params = Map();
-      params['userName'] = _username.text;
-      params['passWord'] = _password1.text;
-      params['firstName'] = _firstname.text;
-      params['lastName'] = _lastname.text;
+      params['username'] = _username.text;
+      params['password'] = _password1.text;
+      params['firstname'] = _firstname.text;
+      params['lastname'] = _lastname.text;
       http
           .post('${Config.api_url}/userprofile/registor', body: params)
           .then((response) {
+            print(response.body);
         Map resMap = jsonDecode(response.body) as Map;
         int status = resMap['status'];
         if (status == 1) {
