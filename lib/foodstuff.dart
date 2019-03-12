@@ -33,12 +33,16 @@ class _LandingScreen extends State {
         Map dataMap = jsonData[i];
         Card card = Card(
           child: Column(
+      
             children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(10.0),
+              ),
               new Row(
                 children: <Widget>[
                   Text("ภาพประกอบ : "),
                   Icon(
-                    Icons.ac_unit,
+                    Icons.restaurant,
                     size: 30,
                   ),
                 ],
@@ -77,6 +81,27 @@ class _LandingScreen extends State {
                   Text("ราคา : "),
                   Text(dataMap["price"].toString()),
                   Text(" บาท"),
+                ],
+              ),
+              new Row(
+                children: <Widget>[
+                  Text("ชื่อร้าน : "),
+                  Text(dataMap["storeName"]),
+                ],
+              ),
+              new Row(
+                children: <Widget>[
+                  Text("พิกัด : "),
+                  Text(dataMap["storeAddress"]),
+                ],
+              ),
+              new Row(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                  ),
+                  Text("โทรศัพท์ : "),
+                  Text(dataMap["phoneNumber"]),
                 ],
               )
             ],
@@ -134,6 +159,9 @@ class _ProductSaveScreen extends State {
   TextEditingController _detail = TextEditingController();
   TextEditingController _price = TextEditingController();
   TextEditingController _rating = TextEditingController();
+  TextEditingController _storename = TextEditingController();
+  TextEditingController _storeaddress = TextEditingController();
+  TextEditingController _phoneNumber = TextEditingController();
 
   _ProductSaveScreen(int userId) {
     this._userId = userId;
@@ -145,6 +173,9 @@ class _ProductSaveScreen extends State {
     param['description'] = _detail.text;
     param['price'] = _price.text;
     param['rating'] = _rating.text;
+    param['storeName'] = _storename.text;
+    param['storeAddress'] = _storeaddress.text;
+    param['phoneNumber'] = _phoneNumber.text;
     param['userId'] = '${this._userId}';
     http.post('${Config.api_url}/foodstuff/save', body: param).then((response) {
       print(response.body);
@@ -165,8 +196,8 @@ class _ProductSaveScreen extends State {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("ลงทะเบียนสำเร็จ"),
-          content: new Text("ไอควย"),
+          title: new Text("เพิ่มของกินสำเร็จ"),
+          content: new Text("...."),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
@@ -197,6 +228,10 @@ class _ProductSaveScreen extends State {
             decoration: InputDecoration(hintText: 'ชื่อของกิน'),
           ),
           TextField(
+            controller: _rating,
+            decoration: InputDecoration(hintText: 'ระดับความอร่อย (1-5)'),
+          ),
+          TextField(
             controller: _detail,
             decoration: InputDecoration(hintText: 'รายละเอียด'),
           ),
@@ -205,8 +240,16 @@ class _ProductSaveScreen extends State {
             decoration: InputDecoration(hintText: 'ราคา'),
           ),
           TextField(
-            controller: _rating,
-            decoration: InputDecoration(hintText: 'ระดับความอร่อย (1-5)'),
+            controller: _storename,
+            decoration: InputDecoration(hintText: 'ชื่อร้าน'),
+          ),
+          TextField(
+            controller: _storeaddress,
+            decoration: InputDecoration(hintText: 'ที่อยู่ร้าน'),
+          ),
+          TextField(
+            controller: _phoneNumber,
+            decoration: InputDecoration(hintText: 'โทรศัพท์'),
           ),
           RaisedButton(
             onPressed: onSave,

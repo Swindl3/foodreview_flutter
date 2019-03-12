@@ -49,14 +49,17 @@ class _ECPApp extends State {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('ECP'),
+        title: Text('Signup or Sign In'),
       ),
       body: ListView(
         children: <Widget>[
           TextField(
+            decoration: InputDecoration(hintText: "Username"),
             controller: _userName,
           ),
           TextField(
+            decoration: InputDecoration(hintText: "Password"),
+            obscureText: true,
             controller: _passWord,
           ),
           new Row(
@@ -67,7 +70,7 @@ class _ECPApp extends State {
                 padding: const EdgeInsets.all(8.0),
                 textColor: Colors.white,
                 color: Colors.green,
-                child: new Text("Login"),
+                child: new Text("Sign in"),
               ),
               new RaisedButton(
                 onPressed: () {
@@ -78,7 +81,7 @@ class _ECPApp extends State {
                 color: Colors.blue,
                 padding: const EdgeInsets.all(8.0),
                 child: new Text(
-                  "Register",
+                  "Sign up",
                 ),
               )
             ],
@@ -147,7 +150,7 @@ class _RegisterScreen extends State {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("ลงทะเบียนสำเร็จ"),
-          content: new Text("ไอควย"),
+          content: new Text("โปรดล็อคอินเพื่อนเข้าใช้งาน"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
@@ -168,6 +171,7 @@ class _RegisterScreen extends State {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Text('ลงทะเบียน'),
       ),
       body: ListView(
