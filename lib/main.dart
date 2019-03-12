@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'config.dart';
 import 'dart:convert';
-import 'product.dart';
+import 'foodstuff.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -30,13 +30,13 @@ class _ECPApp extends State {
         .post('${Config.api_url}/userprofile/login', body: param)
         .then((response) {
       Map resMap = jsonDecode(response.body) as Map;
-        print(response.body);
+      print(response.body);
       if (resMap['status'] == 0) {
         int userId = resMap['data'];
         print('user id ${userId}');
         Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) => LandingScreen(userId)));
-      }else{
+      } else {
         print(resMap['data']);
       }
     });
@@ -112,26 +112,54 @@ class _RegisterScreen extends State {
     } else {
       _isError = false;
       Map<String, String> params = Map();
-      params['username'] = _username.text;
-      params['password'] = _password1.text;
-      params['firstname'] = _firstname.text;
-      params['lastname'] = _lastname.text;
+      params['userName'] = _username.text;
+      params['passWord'] = _password1.text;
+      params['firstName'] = _firstname.text;
+      params['lastName'] = _lastname.text;
+      print(params);
       http
           .post('${Config.api_url}/userprofile/registor', body: params)
           .then((response) {
-            print(response.body);
+        print(response.body);
         Map resMap = jsonDecode(response.body) as Map;
         int status = resMap['status'];
         if (status == 1) {
           setState(() {
             _isError = true;
             _msg = resMap['message'];
+            print(_msg);
           });
-        } else {}
+        } else {
+          _showDialog();
+        }
       });
     }
 
     setState(() {});
+  }
+
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("ลงทะเบียนสำเร็จ"),
+          content: new Text("ไอควย"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("ตกลง"),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => ECPApp()));
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
