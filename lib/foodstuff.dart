@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'config.dart';
 import 'dart:convert';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class LandingScreen extends StatefulWidget {
   int _userId;
@@ -23,6 +24,7 @@ class _LandingScreen extends State {
   }
   @override
   void initState() {
+    // double rating = 5;
     super.initState();
     http.post("${Config.api_url}/foodstuff/list").then((response) {
       Map ret = jsonDecode(response.body) as Map;
@@ -39,6 +41,23 @@ class _LandingScreen extends State {
                     Icons.ac_unit,
                     size: 30,
                   ),
+                ],
+              ),
+              new Row(
+                children: <Widget>[
+                  Text("ระดับความอร่อย : "),
+                  SmoothStarRating(
+                    allowHalfRating: false,
+                    onRatingChanged: (v) {
+                      dataMap["rating"] = v;
+                      setState(() {});
+                    },
+                    starCount: 5,
+                    rating: dataMap["rating"],
+                    size: 30.0,
+                    color: Colors.green,
+                    borderColor: Colors.green,
+                  )
                 ],
               ),
               new Row(
@@ -114,6 +133,7 @@ class _ProductSaveScreen extends State {
   TextEditingController _name = TextEditingController();
   TextEditingController _detail = TextEditingController();
   TextEditingController _price = TextEditingController();
+  TextEditingController _rating = TextEditingController();
 
   _ProductSaveScreen(int userId) {
     this._userId = userId;
@@ -124,6 +144,7 @@ class _ProductSaveScreen extends State {
     param['name'] = _name.text;
     param['description'] = _detail.text;
     param['price'] = _price.text;
+    param['rating'] = _rating.text;
     param['userId'] = '${this._userId}';
     http.post('${Config.api_url}/foodstuff/save', body: param).then((response) {
       print(response.body);
@@ -182,6 +203,10 @@ class _ProductSaveScreen extends State {
           TextField(
             controller: _price,
             decoration: InputDecoration(hintText: 'ราคา'),
+          ),
+          TextField(
+            controller: _rating,
+            decoration: InputDecoration(hintText: 'ระดับความอร่อย (1-5)'),
           ),
           RaisedButton(
             onPressed: onSave,

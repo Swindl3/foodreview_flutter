@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'config.dart';
 import 'dart:convert';
 import 'foodstuff.dart';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 void main() {
   runApp(MaterialApp(
