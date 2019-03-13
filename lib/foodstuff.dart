@@ -141,19 +141,19 @@ class _LandingScreen extends State {
   }
 }
 
-class ProductSaveScreen extends StatefulWidget {
+class FoodStuffSaveScreen extends StatefulWidget {
   int _userId;
-  ProductSaveScreen(int userId) {
+  FoodStuffSaveScreen(int userId) {
     this._userId = userId;
   }
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _ProductSaveScreen(this._userId);
+    return _FoodStuffSaveScreen(this._userId);
   }
 }
 
-class _ProductSaveScreen extends State {
+class FoodStuffSaveScreen extends State {
   int _userId;
   TextEditingController _name = TextEditingController();
   TextEditingController _detail = TextEditingController();
