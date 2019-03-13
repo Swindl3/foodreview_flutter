@@ -129,7 +129,7 @@ class _LandingScreen extends State {
         backgroundColor: Colors.black,
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => ProductSaveScreen(_userId)));
+              builder: (BuildContext context) => FoodStuffSaveScreen(_userId)));
         },
         child: Icon(Icons.add),
       ),
@@ -153,7 +153,7 @@ class FoodStuffSaveScreen extends StatefulWidget {
   }
 }
 
-class FoodStuffSaveScreen extends State {
+class _FoodStuffSaveScreen extends State {
   int _userId;
   TextEditingController _name = TextEditingController();
   TextEditingController _detail = TextEditingController();
@@ -163,7 +163,7 @@ class FoodStuffSaveScreen extends State {
   TextEditingController _storeaddress = TextEditingController();
   TextEditingController _phoneNumber = TextEditingController();
 
-  _ProductSaveScreen(int userId) {
+  _FoodStuffSaveScreen(int userId) {
     this._userId = userId;
   }
   void onSave() {
